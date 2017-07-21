@@ -7,12 +7,17 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var catalog = require('./routes/catalog');  //Import routes for "catalog" area of site
+
+console.log('typeof catalog: ' + typeof catalog);
+console.log('typeof index: ' + typeof index);
+
 
 var app = express();
 
 //Set up mongoose connection
 var mongoose = require('mongoose');
-var mongoDB = 'mongodb://<dbuser>:<dbpassword>@ds027819.mlab.com:27819/local_library';
+var mongoDB = 'mongodb://emrysx:vindaxy7@ds027819.mlab.com:27819/local_library';
 mongoose.connect(mongoDB);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
@@ -31,7 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
-
+app.use('/catalog', catalog);  // Add catalog routes to middleware chain.
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
